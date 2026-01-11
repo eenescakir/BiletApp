@@ -1,0 +1,97 @@
+@model BiletApp.Models.Event
+
+@{
+    ViewData["Title"] = "Etkinlik Detayları";
+}
+
+<div class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-info-circle"></i> Etkinlik Detayları</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" class="event-image" alt="@Model.Name" />
+            }
+            
+            <h2>@Model.Name</h2>
+            <p class="lead">@Model.Description</p>
+            
+            <dl class="row">
+                <dt class="col-sm-3">
+                    <i class="fas fa-tag"></i> Kategori
+                </dt>
+                <dd class="col-sm-9">
+                    <span class="badge bg-primary">@Model.Category.Name</span>
+                </dd>
+                
+                <dt class="col-sm-3">
+                    <i class="fas fa-calendar"></i> Tarih
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.EventDate.ToString("dd MMMM yyyy HH:mm")
+                </dd>
+                
+                <dt class="col-sm-3">
+                    <i class="fas fa-map-marker-alt"></i> Mekan
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Venue
+                </dd>
+            </dl>
+
+            <h3 class="mt-4">Biletler</h3>
+            @if (Model.Tickets != null && Model.Tickets.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Bilet Türü</th>
+                                <th>Fiyat</th>
+                                <th>Stok</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var ticket in Model.Tickets)
+                            {
+                                <tr>
+                                    <td>@ticket.TicketType</td>
+                                    <td>@ticket.Price.ToString("C")</td>
+                                    <td>
+                                        @if (ticket.StockQuantity > 0)
+                                        {
+                                            <span class="badge bg-success">@ticket.StockQuantity</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">Tükendi</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">Bu etkinlik için henüz bilet tanımlanmamış.</p>
+            }
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+            <i class="fas fa-edit"></i> Düzenle
+        </a>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Geri Dön
+        </a>
+    </div>
+</div>
+
