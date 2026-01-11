@@ -1,0 +1,79 @@
+@model BiletApp.ViewModels.EventCreateViewModel
+
+@{
+    ViewData["Title"] = "Yeni Etkinlik";
+}
+
+<div class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-plus"></i> Yeni Etkinlik Ekle</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <div class="form-group mb-3">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="CategoryId" class="form-label"></label>
+                    <select asp-for="CategoryId" class="form-select" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+                        <option value="">-- Kategori Seçiniz --</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="EventDate" class="form-label"></label>
+                    <input asp-for="EventDate" class="form-control" type="datetime-local" />
+                    <span asp-validation-for="EventDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Venue" class="form-label"></label>
+                    <input asp-for="Venue" class="form-control" />
+                    <span asp-validation-for="Venue" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="ImageUrl" class="form-label">Resim URL (veya dosya yükleyin)</label>
+                    <input asp-for="ImageUrl" class="form-control" placeholder="https://example.com/image.jpg" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="ImageFile" class="form-label">Veya Resim Dosyası Yükle</label>
+                    <input type="file" name="imageFile" id="ImageFile" class="form-control" accept="image/*" />
+                    <small class="form-text text-muted">PNG, JPG, GIF formatları desteklenir.</small>
+                </div>
+
+                <div class="form-group mb-3">
+                    <img id="ImagePreview" src="#" alt="Önizleme" style="display: none; max-width: 300px; margin-top: 10px; border-radius: 8px;" />
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Kaydet" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
