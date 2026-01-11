@@ -1,0 +1,63 @@
+@model IEnumerable<BiletApp.Models.Ticket>
+
+@{
+    ViewData["Title"] = "Biletler";
+}
+
+<div class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-ticket-alt"></i> Biletler</h1>
+    </div>
+</div>
+
+<div class="container">
+    <p>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Yeni Bilet Ekle
+        </a>
+    </p>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Etkinlik</th>
+                <th>@Html.DisplayNameFor(model => model.TicketType)</th>
+                <th>@Html.DisplayNameFor(model => model.Price)</th>
+                <th>@Html.DisplayNameFor(model => model.StockQuantity)</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Event.Name</td>
+                    <td>@Html.DisplayFor(modelItem => item.TicketType)</td>
+                    <td>@item.Price.ToString("C")</td>
+                    <td>
+                        @if (item.StockQuantity > 0)
+                        {
+                            <span class="badge bg-success">@item.StockQuantity</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Tükendi</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">
+                            <i class="fas fa-eye"></i> Detay
+                        </a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                            <i class="fas fa-edit"></i> Düzenle
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
+                            <i class="fas fa-trash"></i> Sil
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
