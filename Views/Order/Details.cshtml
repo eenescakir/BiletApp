@@ -1,0 +1,65 @@
+@model BiletApp.Models.Order
+
+@{
+    ViewData["Title"] = "Sipariş Detayları";
+}
+
+<div class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-info-circle"></i> Sipariş Detayları</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Sipariş Bilgileri</h5>
+                    <dl class="row">
+                        <dt class="col-sm-4">Müşteri Adı</dt>
+                        <dd class="col-sm-8">@Model.CustomerName</dd>
+                        
+                        <dt class="col-sm-4">E-posta</dt>
+                        <dd class="col-sm-8">@Model.CustomerEmail</dd>
+                        
+                        <dt class="col-sm-4">Telefon</dt>
+                        <dd class="col-sm-8">@Model.CustomerPhone</dd>
+                        
+                        <dt class="col-sm-4">Etkinlik</dt>
+                        <dd class="col-sm-8">
+                            <a asp-controller="Event" asp-action="Details" asp-route-id="@Model.Ticket.EventId">
+                                @Model.Ticket.Event.Name
+                            </a>
+                        </dd>
+                        
+                        <dt class="col-sm-4">Bilet Türü</dt>
+                        <dd class="col-sm-8">@Model.Ticket.TicketType</dd>
+                        
+                        <dt class="col-sm-4">Bilet Fiyatı</dt>
+                        <dd class="col-sm-8">@Model.Ticket.Price.ToString("C")</dd>
+                        
+                        <dt class="col-sm-4">Miktar</dt>
+                        <dd class="col-sm-8">@Model.Quantity</dd>
+                        
+                        <dt class="col-sm-4">Toplam Tutar</dt>
+                        <dd class="col-sm-8"><strong class="text-primary">@Model.TotalAmount.ToString("C")</strong></dd>
+                        
+                        <dt class="col-sm-4">Sipariş Tarihi</dt>
+                        <dd class="col-sm-8">@Model.OrderDate.ToString("dd MMMM yyyy HH:mm")</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+            <i class="fas fa-edit"></i> Düzenle
+        </a>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Geri Dön
+        </a>
+    </div>
+</div>
+
