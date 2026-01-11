@@ -1,0 +1,60 @@
+@model IEnumerable<BiletApp.Models.Order>
+
+@{
+    ViewData["Title"] = "Siparişler";
+}
+
+<div class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-shopping-cart"></i> Siparişler</h1>
+    </div>
+</div>
+
+<div class="container">
+    <p>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Yeni Sipariş Oluştur
+        </a>
+    </p>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Müşteri Adı</th>
+                <th>E-posta</th>
+                <th>Etkinlik</th>
+                <th>Bilet Türü</th>
+                <th>Miktar</th>
+                <th>Toplam Tutar</th>
+                <th>Tarih</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CustomerEmail)</td>
+                    <td>@item.Ticket.Event.Name</td>
+                    <td>@item.Ticket.TicketType</td>
+                    <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                    <td>@item.TotalAmount.ToString("C")</td>
+                    <td>@item.OrderDate.ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">
+                            <i class="fas fa-eye"></i> Detay
+                        </a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                            <i class="fas fa-edit"></i> Düzenle
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
+                            <i class="fas fa-trash"></i> Sil
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
