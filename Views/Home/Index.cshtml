@@ -1,0 +1,85 @@
+@model IEnumerable<BiletApp.Models.Event>
+
+@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<div class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-ticket-alt"></i> BiletApp'e Hoş Geldiniz</h1>
+        <p class="lead">En iyi etkinlikler için biletlerinizi buradan satın alabilirsiniz</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2 class="mb-4">Popüler Etkinlikler</h2>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card event-card" onclick="location.href='@Url.Action("Details", "Event", new { id = item.Id })'">
+                        @if (!string.IsNullOrEmpty(item.ImageUrl))
+                        {
+                            <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name" />
+                        }
+                        else
+                        {
+                            <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <i class="fas fa-image fa-3x text-white"></i>
+                            </div>
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Name</h5>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    <i class="fas fa-calendar"></i> @item.EventDate.ToString("dd MMMM yyyy HH:mm")
+                                </small>
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    <i class="fas fa-map-marker-alt"></i> @item.Venue
+                                </small>
+                            </p>
+                            <span class="badge bg-primary">@item.Category.Name</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i> Henüz etkinlik bulunmamaktadır.
+        </div>
+    }
+
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="stats-card">
+                <h3>@ViewBag.TotalEvents</h3>
+                <p><i class="fas fa-calendar-check"></i> Toplam Etkinlik</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stats-card">
+                <h3>@ViewBag.TotalTickets</h3>
+                <p><i class="fas fa-ticket-alt"></i> Toplam Bilet</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stats-card">
+                <h3>@ViewBag.TotalOrders</h3>
+                <p><i class="fas fa-shopping-cart"></i> Toplam Sipariş</p>
+            </div>
+        </div>
+    </div>
+</div>
+
