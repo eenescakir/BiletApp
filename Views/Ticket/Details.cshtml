@@ -1,0 +1,67 @@
+@model BiletApp.Models.Ticket
+
+@{
+    ViewData["Title"] = "Bilet Detayları";
+}
+
+<div class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-info-circle"></i> Bilet Detayları</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div>
+        <dl class="row">
+            <dt class="col-sm-2">
+                Etkinlik
+            </dt>
+            <dd class="col-sm-10">
+                <a asp-controller="Event" asp-action="Details" asp-route-id="@Model.EventId">@Model.Event.Name</a>
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TicketType)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TicketType)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Price.ToString("C")
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.StockQuantity)
+            </dt>
+            <dd class="col-sm-10">
+                @if (Model.StockQuantity > 0)
+                {
+                    <span class="badge bg-success">@Model.StockQuantity</span>
+                }
+                else
+                {
+                    <span class="badge bg-danger">Tükendi</span>
+                }
+            </dd>
+            <dt class="col-sm-2">
+                Siparişler
+            </dt>
+            <dd class="col-sm-10">
+                @if (Model.Orders != null && Model.Orders.Any())
+                {
+                    <span class="badge bg-info">@Model.Orders.Count adet sipariş</span>
+                }
+                else
+                {
+                    <span class="text-muted">Henüz sipariş yok.</span>
+                }
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Düzenle</a>
+        <a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+    </div>
+</div>
+
